@@ -1,9 +1,9 @@
 """Define Page model."""
 from typing import Protocol
 
-from src import const
-from src import session_manager
-from src.models import user
+import const
+import session_manager
+from models import user
 
 
 def validate_user(ssm: session_manager.StreamlitSessionManager) -> bool:

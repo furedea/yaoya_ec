@@ -2,11 +2,11 @@ from typing import Callable, Protocol
 
 import tinydb
 
-from src.models.custom_pydantic import FrozenBaseModel
-from src.models import cart
-from src.models import session
+from models.custom_pydantic import FrozenBaseModel
+from models import cart
+from models import session
 
-from src.services import mockdb
+from services import mockdb
 
 
 class ICartAPIClientService(Protocol):
@@ -46,7 +46,7 @@ class MockCartAPIClientService(FrozenBaseModel):
         """
         with self.session_db.connect() as db:
             query = tinydb.Query()
-            db.update(self.__get_add_item_cb(cart_item), query.session_id == session_id) # type: ignore
+            db.update(self.__get_add_item_cb(cart_item), query.session_id == session_id)  # type: ignore
 
     def __get_add_item_cb(self, cart_item: cart.CartItem) -> Callable[[dict], None]:
         """Get the callback function to add the item to the cart.
@@ -57,24 +57,20 @@ class MockCartAPIClientService(FrozenBaseModel):
         Returns:
             Callable[[dict], None]: The callback function.
         """
+
         def transform(doc: dict) -> None:
             """Transform the document."""
             session_info = session.Session.model_validate(doc)
             cart_info: cart.Cart = session_info.cart
             new_cart_items: list[cart.CartItem] = [*cart_info.cart_items, cart_item]
             new_total_price = cart_item.item.price * cart_item.quantity + cart_info.total_price
-            new_cart = cart.Cart(
-                user_id=cart_info.user_id,
-                cart_items=new_cart_items,
-                total_price=new_total_price
-            )
+            new_cart = cart.Cart(user_id=cart_info.user_id, cart_items=new_cart_items, total_price=new_total_price)
             new_session = session.Session(
-                user_id=session_info.user_id,
-                cart=new_cart,
-                session_id=session_info.session_id
+                user_id=session_info.user_id, cart=new_cart, session_id=session_info.session_id
             )
             for key, value in new_session.model_dump().items():
                 doc[key] = value
+
         return transform
 
     def clear_cart(self, session_id: str) -> None:
@@ -85,7 +81,7 @@ class MockCartAPIClientService(FrozenBaseModel):
         """
         with self.session_db.connect() as db:
             query = tinydb.Query()
-            db.update(self.__get_clear_cart_cb(), query.session_id == session_id) # type: ignore
+            db.update(self.__get_clear_cart_cb(), query.session_id == session_id)  # type: ignore
 
     def __get_clear_cart_cb(self) -> Callable[[dict], None]:
         """Get the callback function to clear the cart.
@@ -93,14 +89,16 @@ class MockCartAPIClientService(FrozenBaseModel):
         Returns:
             Callable[[dict], None]: The callback function.
         """
+
         def transform(doc: dict) -> None:
             """Transform the document."""
             session_info = session.Session.model_validate(doc)
             new_session = session.Session(
                 user_id=session_info.user_id,
                 cart=cart.Cart(user_id=session_info.user_id),
-                session_id=session_info.session_id
+                session_id=session_info.session_id,
             )
             for key, value in new_session.model_dump().items():
                 doc[key] = value
+
         return transform

@@ -1,8 +1,8 @@
 import streamlit as st
 
-from src import app
-from src import init_app
-from src import session_manager
+import app
+import init_app
+import session_manager
 
 
 if __name__ == "__main__":

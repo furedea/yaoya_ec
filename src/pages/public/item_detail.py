@@ -2,13 +2,13 @@ from collections import namedtuple
 
 import streamlit as st
 
-from src import const
-from src import session_manager
-from src.models import cart
-from src.models import item
-from src.models import user
-from src.models.custom_pydantic import FrozenBaseModel
-from src.services import cart_api
+import const
+import session_manager
+from models import cart
+from models import item
+from models import user
+from models.custom_pydantic import FrozenBaseModel
+from services import cart_api
 
 
 class ItemDetailPage(FrozenBaseModel):
@@ -60,9 +60,7 @@ class ItemDetailPage(FrozenBaseModel):
         with st.form("item_detail_form"):
             st.number_input("数量", step=1, min_value=1, max_value=9, key="_quantity")
             st.form_submit_button(
-                label="カートに追加",
-                on_click=self.__cart_in,
-                kwargs=dict(item=item_info, session_id=session_id)
+                label="カートに追加", on_click=self.__cart_in, kwargs=dict(item=item_info, session_id=session_id)
             )
 
     def __cart_in(self, item_info: item.Item, session_id: str) -> None:
@@ -73,10 +71,7 @@ class ItemDetailPage(FrozenBaseModel):
             session_id (str): The session ID.
         """
         cart_api_client: cart_api.ICartAPIClientService = self.ssm.get_cart_api_client()
-        cart_item = cart.CartItem(
-            item=item_info,
-            quantity=st.session_state["_quantity"]
-        )
+        cart_item = cart.CartItem(item=item_info, quantity=st.session_state["_quantity"])
         cart_api_client.add_item(session_id, cart_item)
         st.sidebar.success("カートに追加しました")
         st.session_state["_quantity"] = 1

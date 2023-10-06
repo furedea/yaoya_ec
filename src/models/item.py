@@ -1,5 +1,5 @@
 """Define Item model."""
-from src.models.custom_pydantic import FrozenBaseModel
+from models.custom_pydantic import FrozenBaseModel
 
 
 class Item(FrozenBaseModel):

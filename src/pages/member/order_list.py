@@ -1,12 +1,12 @@
 import streamlit as st
 
-from src import const
-from src import session_manager
-from src.models import exceptions
-from src.models import order
-from src.models import page
-from src.models.custom_pydantic import FrozenBaseModel
-from src.services import order_api
+import const
+import session_manager
+from models import exceptions
+from models import order
+from models import page
+from models.custom_pydantic import FrozenBaseModel
+from services import order_api
 
 
 class OrderListPage(FrozenBaseModel):
@@ -37,13 +37,7 @@ class OrderListPage(FrozenBaseModel):
             return
 
         for idx, order_info in enumerate(orders):
-            (
-                col_no,
-                col_id,
-                col_total,
-                col_date,
-                col_button
-            ) = st.columns(col_size)
+            (col_no, col_id, col_total, col_date, col_button) = st.columns(col_size)
             col_no.text(idx + 1)
             col_id.text(order_info.order_id[-8:])
             col_total.text(order_info.total_price)

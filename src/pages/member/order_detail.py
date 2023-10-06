@@ -2,11 +2,11 @@ from collections import namedtuple
 
 import streamlit as st
 
-from src import const
-from src import session_manager
-from src.models import order
-from src.models import page
-from src.models.custom_pydantic import FrozenBaseModel
+import const
+import session_manager
+from models import order
+from models import page
+from models.custom_pydantic import FrozenBaseModel
 
 
 class OrderDetailPage(FrozenBaseModel):
@@ -38,9 +38,8 @@ class OrderDetailPage(FrozenBaseModel):
         """
         OrderTuple = namedtuple("OrderTuple", ["注文ID", "合計金額", "注文日付"])
         show_order = OrderTuple(
-            order_info.order_id,
-            order_info.total_price,
-            order_info.ordered_at.strftime("%Y-%m-%d %H:%M:%S"))
+            order_info.order_id, order_info.total_price, order_info.ordered_at.strftime("%Y-%m-%d %H:%M:%S")
+        )
 
         st.subheader("注文情報")
 
@@ -60,12 +59,7 @@ class OrderDetailPage(FrozenBaseModel):
             col.text(field_name)
 
         for order_detail in order_info.details:
-            (
-                no_col,
-                name_col,
-                price_col,
-                q_col
-            ) = st.columns(col_size)
+            (no_col, name_col, price_col, q_col) = st.columns(col_size)
             no_col.text(order_detail.order_no)
             name_col.text(order_detail.item.name)
             price_col.text(order_detail.item.price)

@@ -1,10 +1,10 @@
 import streamlit as st
 
-from src import const
-from src import session_manager
-from src.models import item
-from src.models.custom_pydantic import FrozenBaseModel
-from src.services import item_api
+import const
+import session_manager
+from models import item
+from models.custom_pydantic import FrozenBaseModel
+from services import item_api
 
 
 class ItemListPage(FrozenBaseModel):
@@ -24,12 +24,7 @@ class ItemListPage(FrozenBaseModel):
             col.text(field_name)
 
         for idx, item_info in enumerate(item_api_client.get_all()):
-            (
-                no_col,
-                name_col,
-                price_col,
-                button_col
-            ) = st.columns(col_size)
+            (no_col, name_col, price_col, button_col) = st.columns(col_size)
             no_col.text(idx + 1)
             name_col.text(item_info.name)
             price_col.text(item_info.price)

@@ -1,8 +1,8 @@
 """Define Session model."""
 from uuid import uuid4
 
-from src.models import cart
-from src.models.custom_pydantic import FrozenBaseModel
+from models import cart
+from models.custom_pydantic import FrozenBaseModel
 
 
 class Session(FrozenBaseModel):

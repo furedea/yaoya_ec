@@ -1,18 +1,20 @@
 """Manage streamlit.session_state."""
 import streamlit as st
 
-from src import const
-from src.models import item
-from src.models import order
-from src.models import user
-from src.services import auth_api
-from src.services import cart_api
-from src.services import item_api
-from src.services import user_api
-from src.services import order_api
+import const
+from models import item
+from models import order
+from models import user
+from services import auth_api
+from services import cart_api
+from services import item_api
+from services import user_api
+from services import order_api
+
 
 class StreamlitSessionManager:
     """Wrapper for streamlit.session_state. Manage only data that is explicitly retained."""
+
     def __init__(
         self,
         auth_api_client: auth_api.IAuthAPIClientService,

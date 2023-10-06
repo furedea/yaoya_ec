@@ -1,7 +1,7 @@
-"""Defines the data model for an order."""""
+"""Defines the data model for an order.""" ""
 from datetime import datetime
-from src.models import item
-from src.models.custom_pydantic import FrozenBaseModel
+from models import item
+from models.custom_pydantic import FrozenBaseModel
 
 
 class OrderDetail(FrozenBaseModel):

@@ -1,6 +1,6 @@
 """Defines the Cart and CartItem models."""
-from src.models import item
-from src.models.custom_pydantic import FrozenBaseModel
+from models import item
+from models.custom_pydantic import FrozenBaseModel
 
 
 class CartItem(FrozenBaseModel):

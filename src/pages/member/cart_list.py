@@ -1,16 +1,17 @@
 import streamlit as st
 
-from src import const
-from src import session_manager
-from src.models import cart
-from src.models import page
-from src.models.custom_pydantic import FrozenBaseModel
-from src.services import cart_api
-from src.services import order_api
+import const
+import session_manager
+from models import cart
+from models import page
+from models.custom_pydantic import FrozenBaseModel
+from services import cart_api
+from services import order_api
 
 
 class CartPage(FrozenBaseModel):
     """Cart page."""
+
     page_id: const.PageId
     title: str
     ssm: session_manager.StreamlitSessionManager
@@ -37,12 +38,7 @@ class CartPage(FrozenBaseModel):
             col.write(field_name)
 
         for idx, cart_item in enumerate(cart_info.cart_items):
-            (
-                no_col,
-                name_col,
-                price_col,
-                q_col
-            ) = st.columns(col_size)
+            (no_col, name_col, price_col, q_col) = st.columns(col_size)
             no_col.text(idx + 1)
             name_col.text(cart_item.item.name)
             price_col.text(cart_item.item.price)

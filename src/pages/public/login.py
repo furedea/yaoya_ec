@@ -1,13 +1,13 @@
 """Login Page Module."""
 import streamlit as st
 
-from src import const
-from src import session_manager
-from src.models import exceptions
-from src.models import user
-from src.models.custom_pydantic import FrozenBaseModel
-from src.services import auth_api
-from src.services import user_api
+import const
+import session_manager
+from models import exceptions
+from models import user
+from models.custom_pydantic import FrozenBaseModel
+from services import auth_api
+from services import user_api
 
 
 class LoginPage(FrozenBaseModel):

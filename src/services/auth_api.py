@@ -3,11 +3,11 @@ from typing import Protocol
 
 import dataset
 
-from src.models.custom_pydantic import FrozenBaseModel
-from src.models import cart
-from src.models import exceptions
-from src.models import session
-from src.services import mockdb
+from models.custom_pydantic import FrozenBaseModel
+from models import cart
+from models import exceptions
+from models import session
+from services import mockdb
 
 
 class IAuthAPIClientService(Protocol):
@@ -17,6 +17,7 @@ class IAuthAPIClientService(Protocol):
 
 class MockAuthAPIClientService(FrozenBaseModel):
     """Mock API client service for authentication."""
+
     mock_db: mockdb.MockDB
     session_db: mockdb.MockSessionDB
 
@@ -53,7 +54,7 @@ class MockAuthAPIClientService(FrozenBaseModel):
             bool: True if user ID and password are correct.
         """
         with self.mock_db.connect() as db:
-            table: dataset.Table = db["users"] # type: ignore
+            table: dataset.Table = db["users"]  # type: ignore
             user_data = table.find_one(user_id=user_id)
 
         return user_data is not None

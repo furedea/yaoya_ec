@@ -4,10 +4,10 @@ from typing import Protocol
 import dataset
 import tinydb
 
-from src.models.custom_pydantic import FrozenBaseModel
-from src.models import exceptions
-from src.models import user
-from src.services import mockdb
+from models.custom_pydantic import FrozenBaseModel
+from models import exceptions
+from models import user
+from services import mockdb
 
 
 class IUserAPIClientService(Protocol):
@@ -20,6 +20,7 @@ class IUserAPIClientService(Protocol):
 
 class MockUserAPIClientService(FrozenBaseModel):
     """Mock API client service for user."""
+
     mock_db: mockdb.MockDB
     session_db: mockdb.MockSessionDB
 
@@ -33,7 +34,7 @@ class MockUserAPIClientService(FrozenBaseModel):
             User: User.
         """
         with self.mock_db.connect() as db:
-            table: dataset.Table = db["users"] # type: ignore
+            table: dataset.Table = db["users"]  # type: ignore
             user_data = table.find_one(user_id=user_id)
 
         if user_data is None:
