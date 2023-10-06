@@ -1,4 +1,6 @@
 """Define custom exceptions."""
+
+
 class YaoyaError(Exception):
     pass
 

@@ -45,7 +45,7 @@ def init_pages(ssm: session_manager.StreamlitSessionManager) -> list[page.Page]:
     Returns:
         list[Page]: List of pages
     """
-    pages = [
+    pages: list[page.Page] = [
         login.LoginPage(page_id=const.PageId.PUBLIC_LOGIN, title="ログイン", ssm=ssm),
         item_list.ItemListPage(page_id=const.PageId.PUBLIC_ITEM_LIST, title="商品一覧", ssm=ssm),
         item_detail.ItemDetailPage(page_id=const.PageId.PUBLIC_ITEM_DETAIL, title="商品詳細", ssm=ssm),

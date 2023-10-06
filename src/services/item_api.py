@@ -27,5 +27,4 @@ class MockItemAPIClientService(FrozenBaseModel):
         with self.mock_db.connect() as db:
             table: dataset.Table = db["items"]  # type: ignore
             items_data = table.all()
-
         return [item.Item.model_validate(item_data) for item_data in items_data]

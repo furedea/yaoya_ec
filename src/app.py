@@ -26,11 +26,11 @@ class MultiPageApp(FrozenBaseModel):
             self.nav_label,
             list(self._pages.keys()),
             format_func=lambda page_id: self._pages[page_id].title,
-            key=const.SessionKey.PAGE_ID.name,
         )
         if page_id is None:
             st.error("ページが選択されていません")
             return
 
+        self.ssm.set_page_id(page_id)
         self.ssm.show_userbox()
         self._pages[page_id].render()

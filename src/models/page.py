@@ -1,5 +1,5 @@
 """Define Page model."""
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 import const
 import session_manager
@@ -21,6 +21,7 @@ def validate_user(ssm: session_manager.StreamlitSessionManager) -> bool:
     return True
 
 
+@runtime_checkable
 class Page(Protocol):
     page_id: const.PageId
     title: str
